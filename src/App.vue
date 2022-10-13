@@ -1,19 +1,21 @@
 <template>
-  <v-app>
-    <v-main>
-      <HelloWorld/>
-    </v-main>
+  <v-app >
+    <v-layout>
+      <v-main>
+        <NavComexs></NavComexs>
+      </v-main>
+    </v-layout>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavComexs from './components/NavComexs.vue'
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    NavComexs
   },
 
   data: () => ({
