@@ -3,8 +3,9 @@
     <v-app-bar color="teal-darken-3" prominent>
       <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>ComeXs</v-toolbar-title>
-
+      
+      <v-toolbar-title><a href="/" color="white">ComeXs</a> </v-toolbar-title>
+    
       <v-spacer></v-spacer>
 
       <v-btn variant="text" icon="mdi-ballot" to="/catalog"><v-icon></v-icon>
@@ -65,7 +66,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+a {
+  text-decoration: none  !important;
+  color: white;
+}
 
 </style>
 
