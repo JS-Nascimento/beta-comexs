@@ -1,6 +1,6 @@
 <template>
     <v-card
-    class="h-full d-flex flex-column mx-3 my-3"
+    class="h-full d-flex flex-column mx-1 my-3 "
     max-width="265" 
   >
     <v-img
