@@ -19,7 +19,7 @@
                 <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
             <template v-if="extended" v-slot:extension>
-                <v-row align-content="justify-center">
+                <v-row >
                     <v-col cols="auto" xs="1" align-self="stretch">
                         <v-btn-toggle v-model="toggle_exclusive" class="ml-5">
                             <v-btn icon @click='isExclusive(0)'>
@@ -70,8 +70,8 @@
         </v-toolbar>
         <v-divider class="mb-2" />
         <v-container fluid>
-        <v-col v-if="toggle_exclusive === 0" cols="12">
-            <v-row class="mx-auto justify-lg-space-around justify-xs-center ">
+        <v-col v-show="toggle_exclusive === 0" cols="12">
+            <v-row class="mx-auto justify-lg-space-around">
                 <ProductCard />
                 <ProductCard />
                 <ProductCard />
@@ -84,7 +84,7 @@
                 <ProductCard />
             </v-row>
         </v-col>
-     </v-container>
+     
         <v-col v-if="toggle_exclusive === 1" cols="12">
             <ProductTable></ProductTable>
 
@@ -93,6 +93,7 @@
             Teste Visualização LISTAGEM
 
         </v-col>
+    </v-container>
     </div>
 </template>
 
@@ -108,7 +109,7 @@ export default {
     data: () => ({
 
         extended: false,
-        toggle_exclusive: 0,
+        toggle_exclusive: 1,
 
     }),
     methods: {
