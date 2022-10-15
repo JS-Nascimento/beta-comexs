@@ -19,23 +19,48 @@
                 <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
             <template v-if="extended" v-slot:extension>
-                <v-row>
-                    <v-col class="ml-2" cols="2" xs="1">
-                        <v-select label="Grupos" :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']"
-                            outlined dense max-height="20px" class="col-4"></v-select>
+                <v-row align-content="justify-center">
+                    <v-col cols="auto" xs="1" align-self="stretch">
+                        <v-btn-toggle v-model="toggle_exclusive" class="ml-5">
+                            <v-btn icon @click='isExclusive(0)'>
+                                <v-icon>mdi-view-carousel</v-icon>
+                                <v-tooltip activator="parent" location="bottom">Visualização em Cartões
+                                </v-tooltip>
+                            </v-btn>
+
+                            <v-btn icon @click="isExclusive(1)">
+                                <v-icon>mdi-view-grid</v-icon>
+                                <v-tooltip activator="parent" location="bottom">Visualização em Tabela
+                                </v-tooltip>
+                            </v-btn>
+
+                            <v-btn icon @click="isExclusive(2)">
+                                <v-icon>mdi-view-list</v-icon>
+                                <v-tooltip activator="parent" location="bottom">Visualização em Lista
+                                </v-tooltip>
+                            </v-btn>
+
+                        </v-btn-toggle>
+                        <v-tooltip activator="parent" location="bottom">Modos de Visualização
+                        </v-tooltip>
                     </v-col>
-                    <v-col cols="3" xs="1">
-                        <v-select label="Subgrupos"
-                            :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" outlined dense
-                            max-height="20px" class="col-4"></v-select>
+                    <v-col cols="7" xs="1" align-self="center">
+                        <v-row>
+                            <v-select label="Grupos"
+                                :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']"></v-select>
+                            <v-select label="Subgrupos"
+                                :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" class="px-2">
+                            </v-select>
+                            <v-select label="Famílias"
+                                :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']"></v-select>
+                        </v-row>
                     </v-col>
-                    <v-col cols="3" xs="1">
-                        <v-select label="Famílias"
-                            :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" outlined dense
-                            max-height="20px" class="col-4"></v-select>
-                    </v-col>
-                    <v-col cols="3" xs="1">
-                        <v-text-field clearable label="Pesquisar" prepend-icon="mdi-magnify" dense><v-tooltip activator="parent" location="bottom">Digite o termo da pesquisa e tecle Enter...</v-tooltip></v-text-field>
+
+                    <v-col cols="3" xs="1" class="px-5" align-self="start">
+                        <v-text-field clearable label="Pesquisar" prepend-icon="mdi-magnify" dense>
+                            <v-tooltip activator="parent" location="bottom">Digite o termo da pesquisa e tecle Enter...
+                            </v-tooltip>
+                        </v-text-field>
                     </v-col>
 
                 </v-row>
@@ -44,8 +69,9 @@
 
         </v-toolbar>
         <v-divider class="mb-2" />
-        <v-col cols="12">
-            <v-row class="mx-auto justify-center justify-lg-space-around ">
+        <v-container fluid>
+        <v-col v-if="toggle_exclusive === 0" cols="12">
+            <v-row class="mx-auto justify-lg-space-around justify-xs-center ">
                 <ProductCard />
                 <ProductCard />
                 <ProductCard />
@@ -58,24 +84,40 @@
                 <ProductCard />
             </v-row>
         </v-col>
+     </v-container>
+        <v-col v-if="toggle_exclusive === 1" cols="12">
+            <ProductTable></ProductTable>
+
+        </v-col>
+        <v-col v-if="toggle_exclusive === 2" cols="12">
+            Teste Visualização LISTAGEM
+
+        </v-col>
     </div>
 </template>
 
 <script>
 import ProductCard from '../components/ProductCard.vue'
+import ProductTable from '../components/ProductTable.vue'
+
 export default {
     components: {
-        ProductCard,
-    },
+    ProductCard,
+    ProductTable
+},
     data: () => ({
 
-        extended: false
+        extended: false,
+        toggle_exclusive: 0,
 
     }),
     methods: {
         isVisible() {
             this.extended = !this.extended
             console.log(this.extended)
+        },
+        isExclusive(index){
+            this.toggle_exclusive = index
         }
     }
 
