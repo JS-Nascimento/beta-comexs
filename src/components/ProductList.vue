@@ -17,7 +17,7 @@
     <template v-slot:back>
     <v-card class="mx-auto" width ="300px" height="350px" max-width="300" max-height="350px">
       <v-list flat>
-        <v-list-title class="mx-2 font-weight-black text-center" >{{description}}</v-list-title>
+        <v-list-title class="d-flex mx-2 font-weight-black text-center" >{{description}}</v-list-title>
         <v-list-item>
           <template v-slot:prepend>
             <v-icon icon="mdi-pound"></v-icon>
