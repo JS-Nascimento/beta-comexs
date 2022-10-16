@@ -88,8 +88,16 @@
 
         </v-col>
         <v-col v-if="toggle_exclusive === 2" cols="12">
-            Teste Visualização LISTAGEM
-
+            <ProductList 
+            description="Apontador com deposito 125flv Faber Castell" 
+            src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
+            id="50001"
+            brand="Faber Castell"
+            pack="Caixa com 25 und"
+            category="Apontadores com Depósito"
+            price="105.25"
+            isFeature
+            />
         </v-col>
     </v-container>
     </div>
@@ -98,16 +106,18 @@
 <script>
 import ProductCard from '../components/ProductCard.vue'
 import ProductTable from '../components/ProductTable.vue'
+import ProductList from '../components/ProductList.vue'
 
 export default {
     components: {
     ProductCard,
-    ProductTable
+    ProductTable,
+    ProductList
 },
     data: () => ({
 
         extended: false,
-        toggle_exclusive: 1,
+        toggle_exclusive: 2,
 
     }),
     methods: {
