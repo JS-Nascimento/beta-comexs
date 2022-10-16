@@ -13,8 +13,10 @@
     "core-js": "^3.8.3",
     "roboto-fontface": "*",
     "vue": "^3.2.13",
+    "vue-flip": "^3.0.2",
     "vue-router": "^4.0.3",
-    "vuetify": "^3.0.0-beta.13",
+    "vue3-easy-data-table": "^1.5.7",
+    "vuetify": "^3.0.0beta.13",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {

@@ -1,14 +1,12 @@
-export default class ProductService {
+export default  {
 
-    getProductsSmall() {
-		return fetch('demo/data/products-small.json').then(res => res.json()).then(d => d.data);
-	}
 
-	getProducts() {
-		return fetch('demo/data/products.json').then(res => res.json()).then(d => d.data);
+	async getProducts() {
+		const res = await fetch('./services/products.json');
+		const d = await res.json();
+		console.log(d.data)
+		return d.data;
     }
 
-    getProductsWithOrdersSmall() {
-		return fetch('demo/data/products-orders-small.json').then(res => res.json()).then(d => d.data);
-	}
+   
 }

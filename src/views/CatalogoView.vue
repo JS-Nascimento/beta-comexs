@@ -5,8 +5,6 @@
 
             <v-spacer></v-spacer>
 
-
-
             <v-btn icon>
                 <v-icon @click="isVisible">mdi-magnify</v-icon>
             </v-btn>
@@ -20,7 +18,7 @@
             </v-btn>
             <template v-if="extended" v-slot:extension>
                 <v-row >
-                    <v-col cols="auto" xs="1" align-self="stretch">
+                    <v-col cols="auto" xs="1" align-self="start">
                         <v-btn-toggle v-model="toggle_exclusive" class="ml-5">
                             <v-btn icon @click='isExclusive(0)'>
                                 <v-icon>mdi-view-carousel</v-icon>
@@ -29,13 +27,13 @@
                             </v-btn>
 
                             <v-btn icon @click="isExclusive(1)">
-                                <v-icon>mdi-view-grid</v-icon>
+                                <v-icon>mdi-view-list</v-icon>
                                 <v-tooltip activator="parent" location="bottom">Visualização em Tabela
                                 </v-tooltip>
                             </v-btn>
 
                             <v-btn icon @click="isExclusive(2)">
-                                <v-icon>mdi-view-list</v-icon>
+                                <v-icon>mdi-view-grid</v-icon>
                                 <v-tooltip activator="parent" location="bottom">Visualização em Lista
                                 </v-tooltip>
                             </v-btn>
@@ -56,21 +54,21 @@
                         </v-row>
                     </v-col>
 
-                    <v-col cols="3" xs="1" class="px-5" align-self="start">
+                <!--     <v-col cols="3" xs="1" class="px-5" align-self="start">
                         <v-text-field clearable label="Pesquisar" prepend-icon="mdi-magnify" dense>
                             <v-tooltip activator="parent" location="bottom">Digite o termo da pesquisa e tecle Enter...
                             </v-tooltip>
                         </v-text-field>
-                    </v-col>
+                    </v-col> -->
 
                 </v-row>
 
             </template>
 
         </v-toolbar>
-        <v-divider class="mb-2" />
+        
         <v-container fluid>
-        <v-col v-show="toggle_exclusive === 0" cols="12">
+        <v-col v-if="toggle_exclusive === 0" cols="12">
             <v-row class="mx-auto justify-lg-space-around">
                 <ProductCard />
                 <ProductCard />
@@ -85,7 +83,7 @@
             </v-row>
         </v-col>
      
-        <v-col v-if="toggle_exclusive === 1" cols="12">
+        <v-col v-if="toggle_exclusive === 1" >
             <ProductTable></ProductTable>
 
         </v-col>
