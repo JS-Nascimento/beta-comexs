@@ -5,6 +5,9 @@ import { createVuetify } from 'vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import Vue3EasyDataTable from 'vue3-easy-data-table';
 import 'vue3-easy-data-table/dist/style.css';
+
+import { createPinia } from 'pinia'
+
 import App from './App.vue'
 
 import router from './router'
@@ -27,4 +30,5 @@ import * as locale from 'vuetify/locale'
 createApp(App).use(router)
   .use(vuetify)
   .component('EasyDataTable', Vue3EasyDataTable)
+  .use(createPinia())
   .mount('#app')

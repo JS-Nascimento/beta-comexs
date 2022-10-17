@@ -17,7 +17,7 @@
                 <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
             <template v-if="extended" v-slot:extension>
-                <v-row >
+                <v-row>
                     <v-col cols="auto" xs="1" align-self="start">
                         <v-btn-toggle v-model="toggle_exclusive" class="ml-5">
                             <v-btn icon @click='isExclusive(0)'>
@@ -44,8 +44,9 @@
                     </v-col>
                     <v-col cols="7" xs="1" align-self="center">
                         <v-row>
-                            <v-select label="Grupos"
-                                :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']"></v-select>
+                            <v-autocomplete label="Grupos" :items="optionsCategories" item-text="value"
+                                density="comfortable">
+                            </v-autocomplete>
                             <v-select label="Subgrupos"
                                 :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" class="px-2">
                             </v-select>
@@ -54,7 +55,7 @@
                         </v-row>
                     </v-col>
 
-                <!--     <v-col cols="3" xs="1" class="px-5" align-self="start">
+                    <!--     <v-col cols="3" xs="1" class="px-5" align-self="start">
                         <v-text-field clearable label="Pesquisar" prepend-icon="mdi-magnify" dense>
                             <v-tooltip activator="parent" location="bottom">Digite o termo da pesquisa e tecle Enter...
                             </v-tooltip>
@@ -66,73 +67,108 @@
             </template>
 
         </v-toolbar>
-        
-        <v-container fluid>
-        <v-col v-if="toggle_exclusive === 0" cols="12">
-            <v-row class="mx-auto justify-lg-space-around">
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-            </v-row>
-        </v-col>
-     
-        <v-col v-if="toggle_exclusive === 1" >
-            <ProductTable></ProductTable>
 
-        </v-col>
-        <v-col v-if="toggle_exclusive === 2" cols="12">
-            <ProductList 
-            description="Apontador com deposito 125flv Faber Castell" 
-            src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
-            id="50001"
-            brand="Faber Castell"
-            pack="Caixa com 25 und"
-            category="Apontadores com Depósito"
-            price="105.25"
-            isFeature
-            />
-        </v-col>
-    </v-container>
+        <v-container>
+            <v-col v-if="toggle_exclusive === 0" cols="12">
+                <v-row class="mx-auto justify-lg-space-around">
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                </v-row>
+            </v-col>
+
+            <v-col v-if="toggle_exclusive === 1">
+                <ProductTable></ProductTable>
+
+            </v-col>
+
+
+            <div v-if="toggle_exclusive === 2">
+                <v-container>
+                    <v-row justify="center">
+                        <v-col v-for="(item) in items" :key="item.id" cols="auto" >
+                            <ProductList class="d-flex justify-center align-center" :description="item.name"
+                                src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
+                                :id="item.id" brand="Faber Castell" pack="Caixa com 25 und"
+                                category="Apontadores com Depósito" price="105.25" isFeature />
+                        </v-col>
+                    </v-row>
+                </v-container>
+                <!-- <v-sheet v-for="(item, index) in items" :key="index" class="pa-2" >
+                    <ProductList :key="index" :description="item.name"
+                        src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
+                        :id="item.id" brand="Faber Castell" pack="Caixa com 25 und" category="Apontadores com Depósito"
+                        price="105.25" isFeature />
+                      
+                </v-sheet> -->
+
+            </div>
+
+        </v-container>
+
+
     </div>
 </template>
 
-<script>
+<script >
 import ProductCard from '../components/ProductCard.vue'
 import ProductTable from '../components/ProductTable.vue'
-import ProductList from '../components/ProductList.vue'
+//import ProductList from '../components/ProductList.vue'
+import { useProductCategoryStore } from "@/stores/ProductCategory";
+
+
+
+const Category = useProductCategoryStore()
+Category.fill()
+
+console.log(Category.$state.productCategory)
+console.log(Category.$state)
+
 
 export default {
+    props: {
+        Category: {
+            id: {},
+            name: {}
+        }
+
+    },
+
     components: {
-    ProductCard,
-    ProductTable,
-    ProductList
-},
+        ProductCard,
+        ProductTable,
+        //ProductList,
+
+    },
     data: () => ({
 
         extended: false,
         toggle_exclusive: 2,
+        items: Category.$state.productCategory
 
     }),
     methods: {
         isVisible() {
             this.extended = !this.extended
-            console.log(this.extended)
+
         },
-        isExclusive(index){
+        isExclusive(index) {
             this.toggle_exclusive = index
+        },
+        computed: {
+            optionsCategories() {
+                return Object.entries(this.items)
+                    .map(([key, value]) => ({ text: key, value: value }));
+            },
         }
-    }
-
-
-
-
+    },
 }
 </script>
 

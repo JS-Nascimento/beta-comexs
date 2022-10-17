@@ -14,6 +14,7 @@
 <script>
 import NavComexs from './components/NavComexs.vue'
 
+
 export default {
   name: 'App',
 

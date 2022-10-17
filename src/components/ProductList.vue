@@ -1,7 +1,7 @@
-<template>
+<template >
   <vue-flip active-click >
     <template v-slot:front>
-      <v-card class="mx-auto" width ="300px" height="350px" max-width="300" max-height="350px">
+      <v-card  pa-2 width ="300px" height="350px" max-width="300" max-height="350px">
         <v-tooltip activator="parent" location="bottom">Click-me</v-tooltip>
         <v-img
         class="bg-white"
@@ -15,7 +15,7 @@
       </v-card>
   </template>
     <template v-slot:back>
-    <v-card class="mx-auto" width ="300px" height="350px" max-width="300" max-height="350px">
+    <v-card  width ="300px" height="350px" max-width="300" max-height="350px">
       <v-list flat>
         <v-list-title class="d-flex mx-2 font-weight-black text-center" >{{description}}</v-list-title>
         <v-list-item>
