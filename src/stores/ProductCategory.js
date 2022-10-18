@@ -25,10 +25,10 @@ export const useProductCategoryStore = defineStore("ProductCategory", {
             
         },
 
-        addCategory(id, name) {
+        addCategory(id , name) {
             const newCategory = {
-                id:id,
-                name: name
+                key:id,
+                text: name
             };
 
             this.productCategory.push(newCategory);

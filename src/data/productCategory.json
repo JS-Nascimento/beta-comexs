@@ -2,14 +2,6 @@
     "data": [
         {
             "CODGRUPOPROD": {
-                "V": "100000000"
-            },
-            "DESCRGRUPOPROD": {
-                "V": "PRODUTOS DE REVENDA"
-            }
-        },
-        {
-            "CODGRUPOPROD": {
                 "V": "101000000"
             },
             "DESCRGRUPOPROD": {

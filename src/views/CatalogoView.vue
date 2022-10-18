@@ -44,9 +44,7 @@
                     </v-col>
                     <v-col cols="7" xs="1" align-self="center">
                         <v-row>
-                            <v-autocomplete label="Grupos" :items="optionsCategories" item-text="value"
-                                density="comfortable">
-                            </v-autocomplete>
+                            <v-autocomplete label="Categoria" :items="items" item-text="text" item-value="key" item-title="text"></v-autocomplete>
                             <v-select label="Subgrupos"
                                 :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" class="px-2">
                             </v-select>
@@ -92,23 +90,15 @@
 
             <div v-if="toggle_exclusive === 2">
                 <v-container>
-                    <v-row justify="center">
-                        <v-col v-for="(item) in items" :key="item.id" cols="auto" >
-                            <ProductList class="d-flex justify-center align-center" :description="item.name"
+                    <v-row>
+                        <v-col cols="auto">
+                            <ProductList class="d-flex justify-center align-center" description="Apontador"
                                 src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
-                                :id="item.id" brand="Faber Castell" pack="Caixa com 25 und"
+                                id="5001" brand="Faber Castell" pack="Caixa com 25 und"
                                 category="Apontadores com Depósito" price="105.25" isFeature />
                         </v-col>
                     </v-row>
                 </v-container>
-                <!-- <v-sheet v-for="(item, index) in items" :key="index" class="pa-2" >
-                    <ProductList :key="index" :description="item.name"
-                        src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
-                        :id="item.id" brand="Faber Castell" pack="Caixa com 25 und" category="Apontadores com Depósito"
-                        price="105.25" isFeature />
-                      
-                </v-sheet> -->
-
             </div>
 
         </v-container>
@@ -128,8 +118,11 @@ import { useProductCategoryStore } from "@/stores/ProductCategory";
 const Category = useProductCategoryStore()
 Category.fill()
 
+const CategoryItems = Category.$state.productCategory
+
+
 console.log(Category.$state.productCategory)
-console.log(Category.$state)
+
 
 
 export default {
@@ -151,7 +144,7 @@ export default {
 
         extended: false,
         toggle_exclusive: 2,
-        items: Category.$state.productCategory
+        items: CategoryItems
 
     }),
     methods: {
@@ -163,11 +156,20 @@ export default {
             this.toggle_exclusive = index
         },
         computed: {
-            optionsCategories() {
-                return Object.entries(this.items)
+            inventoryItems() {
+                return CategoryItems.map(Cat => ({
+                    text: Cat.name,
+                    value: Cat.id
+
+                }))
+
+            },
+            options() {
+                return Object.entries(this.CategoryItems)
                     .map(([key, value]) => ({ text: key, value: value }));
             },
         }
+
     },
 }
 </script>
