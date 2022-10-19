@@ -44,21 +44,49 @@
                     </v-col>
                     <v-col cols="7" xs="1" align-self="center">
                         <v-row>
-                            <v-autocomplete label="Categoria" :items="items" item-text="text" item-value="key" item-title="text"></v-autocomplete>
-                            <v-select label="Subgrupos"
-                                :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" class="px-2">
+                            <v-select 
+                                label="Categoria" 
+                                v-model="CategorySelected"  
+                                :items="items" 
+                                item-text="text" 
+                                item-value="key" 
+                                item-title="text"
+                                density="comfortable"
+                                
+
+                                ></v-select>
+                            <v-select 
+                                label="Subgrupos" 
+                                v-model="subCategorySelected"
+                                :disabled="CategorySelected.length < 1"
+                                :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" class="px-2"
+                                density="comfortable"
+                                >
                             </v-select>
-                            <v-select label="Famílias"
-                                :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']"></v-select>
+                            <v-select label="Famílias" 
+                                v-model="familySelected"
+                                :disabled="subCategorySelected.length < 1"
+                                :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']"
+                                density="comfortable"
+                               ></v-select>
                         </v-row>
                     </v-col>
+                    <v-col cols="1" xs="1" class="px-5" align-self="start">
+                        <v-btn
+                            :loading="loading[1]"
+                            :disabled="familySelected.length < 1"
+                            color="blue"
+                            icon="mdi-magnify"
+                            @click="load(4)"
+                            ></v-btn>
+                    </v-col>
 
-                    <!--     <v-col cols="3" xs="1" class="px-5" align-self="start">
-                        <v-text-field clearable label="Pesquisar" prepend-icon="mdi-magnify" dense>
+                        <!--  <v-col cols="3" xs="1" class="px-5" align-self="start">
+                        <v-text-field density="comfortable" clearable label="Pesquisar" prepend-icon="mdi-magnify" :value="CategorySelected" dense>
                             <v-tooltip activator="parent" location="bottom">Digite o termo da pesquisa e tecle Enter...
                             </v-tooltip>
                         </v-text-field>
-                    </v-col> -->
+                    </v-col>  -->
 
                 </v-row>
 
@@ -91,12 +119,12 @@
             <div v-if="toggle_exclusive === 2">
                 <v-container>
                     <v-row>
-                        <v-col cols="auto">
+                        <!-- <v-col cols="auto">
                             <ProductList class="d-flex justify-center align-center" description="Apontador"
                                 src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
                                 id="5001" brand="Faber Castell" pack="Caixa com 25 und"
                                 category="Apontadores com Depósito" price="105.25" isFeature />
-                        </v-col>
+                        </v-col> -->
                     </v-row>
                 </v-container>
             </div>
@@ -115,13 +143,14 @@ import { useProductCategoryStore } from "@/stores/ProductCategory";
 
 
 
+
 const Category = useProductCategoryStore()
 Category.fill()
 
 const CategoryItems = Category.$state.productCategory
 
 
-console.log(Category.$state.productCategory)
+
 
 
 
@@ -129,8 +158,9 @@ export default {
     props: {
         Category: {
             id: {},
-            name: {}
-        }
+            name: {},
+        },
+        
 
     },
 
@@ -144,7 +174,11 @@ export default {
 
         extended: false,
         toggle_exclusive: 2,
-        items: CategoryItems
+        items: CategoryItems,
+        CategorySelected:"" ,
+        subCategorySelected:"",
+        familySelected:"",
+        loading:[]
 
     }),
     methods: {
@@ -155,22 +189,22 @@ export default {
         isExclusive(index) {
             this.toggle_exclusive = index
         },
-        computed: {
-            inventoryItems() {
-                return CategoryItems.map(Cat => ({
-                    text: Cat.name,
-                    value: Cat.id
+        verifySubCategories(){
+            
+        },    
+        load (i) {
+        this.loading[i] = true
+        setTimeout(() => (this.loading[i] = false), 3000)
+      },
 
-                }))
-
-            },
-            options() {
-                return Object.entries(this.CategoryItems)
-                    .map(([key, value]) => ({ text: key, value: value }));
-            },
-        }
-
+    computed: {
+        
+            
     },
+    mounted() {
+        
+    },
+},
 }
 </script>
 
