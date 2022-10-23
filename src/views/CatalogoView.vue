@@ -3,27 +3,7 @@
         <v-responsive>
             <v-toolbar>
                 <v-toolbar-title>Catálogo de Produtos</v-toolbar-title>
-                <v-btn-toggle v-model="toggle_exclusive" class="me-10">
-                    <v-btn icon @click='isExclusive(0)'>
-                        <v-icon>mdi-view-carousel</v-icon>
-                        <v-tooltip activator="parent" location="bottom">Visualização em Cartões
-                        </v-tooltip>
-                    </v-btn>
 
-                    <v-btn icon @click="isExclusive(1)">
-                        <v-icon>mdi-view-list</v-icon>
-                        <v-tooltip activator="parent" location="bottom">Visualização em Tabela
-                        </v-tooltip>
-                    </v-btn>
-
-                    <v-btn icon @click="isExclusive(2)">
-                        <v-icon>mdi-view-grid</v-icon>
-                        <v-tooltip activator="parent" location="bottom">Visualização em Lista
-                        </v-tooltip>
-                    </v-btn>
-                    
-
-                </v-btn-toggle>
 
                 <!--  <v-col cols="3" xs="1" class="px-5" align-self="start">
                         <v-text-field density="comfortable" clearable label="Pesquisar" prepend-icon="mdi-magnify" :value="CategorySelected" dense>
@@ -60,7 +40,33 @@
 
             <v-divider></v-divider>
 
-            <v-list density="compact" nav>
+            <v-list class="d-flex align-center flex-column bg-grey-lighten-4 pa-6">
+                <v-btn-toggle v-model="toggle_exclusive" variant="outlined" class="mx-auto">
+                    <v-btn icon @click='isExclusive(0)'>
+                        <v-icon>mdi-view-carousel</v-icon>
+                        <v-tooltip activator="parent" location="bottom">Visualização em Cartões
+                        </v-tooltip>
+                    </v-btn>
+
+                    <v-btn icon @click="isExclusive(1)">
+                        <v-icon>mdi-view-list</v-icon>
+                        <v-tooltip activator="parent" location="bottom">Visualização em Tabela
+                        </v-tooltip>
+                    </v-btn>
+
+                    <v-btn icon @click="isExclusive(2)">
+                        <v-icon>mdi-view-grid</v-icon>
+                        <v-tooltip activator="parent" location="bottom">Visualização em Lista
+                        </v-tooltip>
+                    </v-btn>
+
+
+                </v-btn-toggle>
+            </v-list>
+
+            <v-divider></v-divider>
+
+            <v-list nav>
                 <v-select label="Categoria" v-model="CategorySelected" :items="items" item-text="text" item-value="key"
                     item-title="text" density="comfortable" min-width="200px">
                 </v-select>
@@ -70,6 +76,15 @@
                 <v-select label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
                     :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" density="comfortable">
                 </v-select>
+            </v-list>
+            <v-list class="mx-2">
+                <v-btn :rounded="0" variant="outlined" size="large" color="error" class="mx-1">
+                    Limpar
+                </v-btn>
+                <v-btn :rounded="0" size="large" color="blue-darken-4" class="mx-1" :loading="loading[1]"
+                    :disabled="loading[1]"  @click="load(1)">
+                    Filtrar
+                </v-btn>
             </v-list>
         </v-navigation-drawer>
 
@@ -187,5 +202,48 @@ export default {
 </script>
 
 <style>
+.custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+}
 
+@-moz-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
 </style>
