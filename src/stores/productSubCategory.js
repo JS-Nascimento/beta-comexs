@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 
-export const useProductCategoryStore = defineStore("ProductSubCategory", {
+export const useProductSubCategoryStore = defineStore("ProductSubCategory", {
     state: () => {
         return {
             productSubCategory: [],
@@ -14,10 +14,11 @@ export const useProductCategoryStore = defineStore("ProductSubCategory", {
             const bruteData = (await import("@/data/productSubCategory.json")).default
 
             for (let counter = 0; counter < bruteData.responseBody.records.record.length; counter++) {
-                this.addCategory(
-                    bruteData.data[counter].CODGRUPOPROD.$,
-                    bruteData.data[counter].DESCRGRUPOPROD.$,
-                    bruteData.data[counter].CODGRUPAI.$
+                
+                this.addSubCategory(
+                    bruteData.responseBody.records.record[counter].CODGRUPOPROD.$,
+                    bruteData.responseBody.records.record[counter].DESCRGRUPOPROD.$,
+                    bruteData.responseBody.records.record[counter].CODGRUPAI.$
                 );
 
             }
@@ -26,7 +27,7 @@ export const useProductCategoryStore = defineStore("ProductSubCategory", {
             
         },
 
-        addCategory(id , name, pai) {
+        addSubCategory(id , name, pai) {
             const newCategory = {
                 key:id,
                 text: name,
@@ -43,7 +44,8 @@ export const useProductCategoryStore = defineStore("ProductSubCategory", {
 
         filterPerCategory(pai){
             const filteredArray = this.productSubCategory.filter(SubCategory => (SubCategory.pai === pai));
-            return filteredArray
+            const modifiedArray = filteredArray.map(({key, text}) => ({key, text}))
+            this.productSubCategory = modifiedArray
         }
 
     }

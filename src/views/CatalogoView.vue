@@ -1,5 +1,5 @@
 <template>
-    <fragment>
+    <div>
         <v-responsive>
             <v-toolbar>
                 <v-toolbar-title>Catálogo de Produtos</v-toolbar-title>
@@ -67,11 +67,12 @@
             <v-divider></v-divider>
 
             <v-list nav>
-                <v-select id="Categoria" label="Categoria" v-model="CategorySelected" :items="items" item-text="text" item-value="key"
-                    item-title="text" density="comfortable" min-width="200px" return-object>
+                <v-select @change="filteredSubCategories(CategorySelected.key)" id="Categoria" label="Categoria" v-model="CategorySelected" :items="itemsCategories" item-text="text" item-value="key"
+                    item-title="text" density="comfortable" min-width="200px"  return-object>
                 </v-select>
                 <v-select id="SubCategoria" label="Subgrupos" v-model="subCategorySelected" :disabled="CategorySelected.length < 1"
-                    :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" density="comfortable">
+                    :items="itemsSubCategories" :item-text="itemsSubCategories.text" :item-value="itemsSubCategories.key"
+                    item-title="text" density="comfortable" return-object>
                 </v-select>
                 <v-select id="Familia" label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
                     :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" density="comfortable">
@@ -130,7 +131,7 @@
             </div>
         
 
-    </fragment>
+    </div>
 </template>
 
 <script >
@@ -138,15 +139,16 @@ import ProductCard from '../components/ProductCard.vue'
 import ProductTable from '../components/ProductTable.vue'
 //import ProductList from '../components/ProductList.vue'
 import { useProductCategoryStore } from "@/stores/ProductCategory";
-
-
-
-
 const Category = useProductCategoryStore()
 Category.fill()
-
 const CategoryItems = Category.$state.productCategory
 
+import { useProductSubCategoryStore } from "@/stores/productSubCategory";
+
+const SubCategory = useProductSubCategoryStore()
+SubCategory.fill()
+
+const SubCategoryItems = SubCategory.$state.productSubCategory
 
 
 
@@ -170,9 +172,9 @@ export default {
     },
     data: () => ({
 
-        extended: false,
         toggle_exclusive: 2,
-        items: CategoryItems,
+        itemsCategories: CategoryItems,
+        itemsSubCategories: SubCategoryItems,
         CategorySelected: [],
         subCategorySelected: "",
         familySelected: "",
@@ -224,9 +226,13 @@ export default {
                 this.drawer=!this.drawer //fecha menu lateral
         },
 
-     
+        filteredSubCategories(pai){
+            console.log(pai)
+            this.itemsSubCategories = SubCategory.filterPerCategory(pai)
+        }
+    } ,
       
-    },
+    
 }
 </script>
 
