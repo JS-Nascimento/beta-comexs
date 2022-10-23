@@ -72,10 +72,11 @@
                 </v-select>
                 <v-select id="SubCategoria" label="Subgrupos" v-model="subCategorySelected" :disabled="CategorySelected.length < 1"
                     :items="itemsSubCategories" item-text="text" item-value="key"
-                    item-title="text" density="comfortable" return-object>
+                    item-title="text" density="comfortable" return-object @update:model-value="filteredFamily(subCategorySelected.key)">
                 </v-select>
                 <v-select id="Familia" label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
-                    :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" density="comfortable">
+                    :items="itemsFamily" item-text="text" item-value="key"
+                    item-title="text" density="comfortable" return-object>
                 </v-select>
             </v-list>
             <v-list class="mx-2">
@@ -83,14 +84,14 @@
                     Limpar
                 </v-btn>
                 <v-btn :rounded="0" size="large" color="blue-darken-4" class="mx-1" :loading="loading[1]"
-                    :disabled="familySelected.length < 1" @click="filtersProducts( 1, CategorySelected.text)">
+                    :disabled="familySelected.length < 1" @click="filtersProducts( 1, CategorySelected.text,subCategorySelected.text, familySelected.text)">
                     Filtrar
                 </v-btn>
             </v-list>
         </v-navigation-drawer>
 
         
-            <v-breadcrumbs :items="itemsSelected">
+            <v-breadcrumbs :items="itemsSelected" bg-color="teal-lighten-4">
                 <template v-slot:divider>
                     <v-icon icon="mdi-forward"></v-icon>
                 </template>
@@ -143,6 +144,8 @@ const Category = useProductCategoryStore()
 Category.fill()
 const CategoryItems = Category.$state.productCategory
 
+
+
 import { useProductSubCategoryStore } from "@/stores/ProductSubCategory";
 
 const SubCategory = useProductSubCategoryStore()
@@ -151,6 +154,14 @@ SubCategory.fill()
 const SubCategoryItems = SubCategory.$state.productSubCategory
 
 
+
+
+import { useProductFamilyStore } from "@/stores/ProductFamily";
+
+const Family = useProductFamilyStore()
+Family.fill()
+
+const FamilyItems = Family.$state.productFamily
 
 
 
@@ -175,9 +186,10 @@ export default {
         toggle_exclusive: 2,
         itemsCategories: CategoryItems,
         itemsSubCategories: SubCategoryItems,
+        itemsFamily: FamilyItems,
         CategorySelected: [],
-        subCategorySelected: "",
-        familySelected: "",
+        subCategorySelected: [],
+        familySelected: [],
         loading: [],
         drawer: null,
         itemsSelected: [
@@ -211,24 +223,44 @@ export default {
             this.itemsSelected=[]
 
         },
-        setBreadCumbs(CategoryName){
+        setBreadCumbs(CategoryName, SubCategoryName, FamilyName){
             this.itemsSelected=[]
             const catSelected = {
                 title: CategoryName,
                 disabled: false,
             }
+
             this.itemsSelected.push(catSelected)
+            const SubcatSelected = {
+                title: SubCategoryName,
+                disabled: false,
+            }
+            this.itemsSelected.push(SubcatSelected)
+            const FamcatSelected = {
+                title: FamilyName,
+                disabled: false,
+            }
+            this.itemsSelected.push(FamcatSelected)
+
+
         },
 
-        filtersProducts( theLoad, CategoryName){
+        filtersProducts( theLoad, CategoryName,SubCategoryName, FamilyName){
                 this.load(theLoad) // ative modo espera
-                this.setBreadCumbs(CategoryName)
+                this.setBreadCumbs(CategoryName,SubCategoryName, FamilyName)
                 this.drawer=!this.drawer //fecha menu lateral
         },
 
         filteredSubCategories(pai){
-            console.log(pai)
+            this.subCategorySelected = ""
+            this.familySelected = ""
             this.itemsSubCategories = SubCategory.filterPerCategory(pai)
+
+
+        },
+        filteredFamily(pai){
+            this.familySelected = ""
+            this.itemsFamily = Family.filterPerSubCategory(pai)
         }
     } ,
       
