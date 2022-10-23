@@ -67,62 +67,68 @@
             <v-divider></v-divider>
 
             <v-list nav>
-                <v-select label="Categoria" v-model="CategorySelected" :items="items" item-text="text" item-value="key"
-                    item-title="text" density="comfortable" min-width="200px">
+                <v-select id="Categoria" label="Categoria" v-model="CategorySelected" :items="items" item-text="text" item-value="key"
+                    item-title="text" density="comfortable" min-width="200px" return-object>
                 </v-select>
-                <v-select label="Subgrupos" v-model="subCategorySelected" :disabled="CategorySelected.length < 1"
+                <v-select id="SubCategoria" label="Subgrupos" v-model="subCategorySelected" :disabled="CategorySelected.length < 1"
                     :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" density="comfortable">
                 </v-select>
-                <v-select label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
+                <v-select id="Familia" label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
                     :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" density="comfortable">
                 </v-select>
             </v-list>
             <v-list class="mx-2">
-                <v-btn :rounded="0" variant="outlined" size="large" color="error" class="mx-1">
+                <v-btn :rounded="0" variant="outlined" size="large" color="error" class="mx-1" @click="cleanFilters()">
                     Limpar
                 </v-btn>
                 <v-btn :rounded="0" size="large" color="blue-darken-4" class="mx-1" :loading="loading[1]"
-                    :disabled="loading[1]"  @click="load(1)">
+                    :disabled="familySelected.length < 1" @click="filtersProducts( 1, CategorySelected.text)">
                     Filtrar
                 </v-btn>
             </v-list>
         </v-navigation-drawer>
 
+        
+            <v-breadcrumbs :items="itemsSelected">
+                <template v-slot:divider>
+                    <v-icon icon="mdi-forward"></v-icon>
+                </template>
+            </v-breadcrumbs>
 
-        <v-col v-if="toggle_exclusive === 0" cols="12">
-            <v-row class="mx-auto justify-lg-space-around">
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-            </v-row>
-        </v-col>
+            <v-col v-if="toggle_exclusive === 0" cols="12">
+                <v-row class="mx-auto justify-lg-space-around">
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                    <ProductCard />
+                </v-row>
+            </v-col>
 
-        <v-col v-if="toggle_exclusive === 1">
-            <ProductTable></ProductTable>
+            <v-col v-if="toggle_exclusive === 1">
+                <ProductTable></ProductTable>
 
-        </v-col>
+            </v-col>
 
 
-        <div v-if="toggle_exclusive === 2">
+            <div v-if="toggle_exclusive === 2">
 
-            <v-row>
-                <!-- <v-col cols="auto">
+                <v-row>
+                    <!-- <v-col cols="auto">
                             <ProductList class="d-flex justify-center align-center" description="Apontador"
                                 src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
                                 id="5001" brand="Faber Castell" pack="Caixa com 25 und"
                                 category="Apontadores com Depósito" price="105.25" isFeature />
                         </v-col> -->
-            </v-row>
+                </v-row>
 
-        </div>
-
+            </div>
+        
 
     </fragment>
 </template>
@@ -167,11 +173,17 @@ export default {
         extended: false,
         toggle_exclusive: 2,
         items: CategoryItems,
-        CategorySelected: "",
+        CategorySelected: [],
         subCategorySelected: "",
         familySelected: "",
         loading: [],
         drawer: null,
+        itemsSelected: [
+        {
+         
+        },
+      
+    ]
 
     }),
     methods: {
@@ -190,18 +202,35 @@ export default {
             setTimeout(() => (this.loading[i] = false), 3000)
         },
 
-        computed: {
-
+        cleanFilters() {
+            this.CategorySelected = ""
+            this.subCategorySelected = ""
+            this.familySelected = ""
+            this.itemsSelected=[]
 
         },
-        mounted() {
-
+        setBreadCumbs(CategoryName){
+            this.itemsSelected=[]
+            const catSelected = {
+                title: CategoryName,
+                disabled: false,
+            }
+            this.itemsSelected.push(catSelected)
         },
+
+        filtersProducts( theLoad, CategoryName){
+                console.log(CategoryName)
+                this.load(theLoad)
+                this.setBreadCumbs(CategoryName)
+        },
+
+     
+      
     },
 }
 </script>
 
-<style>
+<style scoped>
 .custom-loader {
     animation: loader 1s infinite;
     display: flex;
