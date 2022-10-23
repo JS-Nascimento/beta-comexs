@@ -1,124 +1,115 @@
 <template>
- <fragment>
-    <v-responsive>
-
-        <v-toolbar :extended="extended">
-            <v-toolbar-title>Catálogo de Produtos</v-toolbar-title>
-
-            <v-spacer></v-spacer>
-
-            <v-btn icon>
-                <v-icon @click="isVisible">mdi-magnify</v-icon>
-            </v-btn>
-
-            <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-            </v-btn>
-
-            <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-            <template v-if="extended" v-slot:extension>
-                <v-row class="d-flex wrap justify-space-between flex-lg-row flex-sm-column">
-                    <v-col class="d-flex justify-center" cols="2">
-
-                        <v-btn-toggle v-model="toggle_exclusive" class="mx-5 mb-5">
-                            <v-btn icon @click='isExclusive(0)'>
-                                <v-icon>mdi-view-carousel</v-icon>
-                                <v-tooltip activator="parent" location="bottom">Visualização em Cartões
-                                </v-tooltip>
-                            </v-btn>
-
-                            <v-btn icon @click="isExclusive(1)">
-                                <v-icon>mdi-view-list</v-icon>
-                                <v-tooltip activator="parent" location="bottom">Visualização em Tabela
-                                </v-tooltip>
-                            </v-btn>
-
-                            <v-btn icon @click="isExclusive(2)">
-                                <v-icon>mdi-view-grid</v-icon>
-                                <v-tooltip activator="parent" location="bottom">Visualização em Lista
-                                </v-tooltip>
-                            </v-btn>
-
-                        </v-btn-toggle>
-                        <v-tooltip activator="parent" location="bottom">Modos de Visualização
+    <fragment>
+        <v-responsive>
+            <v-toolbar>
+                <v-toolbar-title>Catálogo de Produtos</v-toolbar-title>
+                <v-btn-toggle v-model="toggle_exclusive" class="me-10">
+                    <v-btn icon @click='isExclusive(0)'>
+                        <v-icon>mdi-view-carousel</v-icon>
+                        <v-tooltip activator="parent" location="bottom">Visualização em Cartões
                         </v-tooltip>
-                    </v-col>
-                    <!-- <v-col cols="7" xs="1" align-self="center"> -->
+                    </v-btn>
 
-                    <v-col class="d-flex justify-center" cols="6">
-                        <v-select label="Categoria" v-model="CategorySelected" :items="items" item-text="text"
-                            item-value="key" item-title="text" density="comfortable" min-width="200px">
-                        </v-select>
-                        <v-select label="Subgrupos" v-model="subCategorySelected"
-                            :disabled="CategorySelected.length < 1"
-                            :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" class="px-2"
-                            density="comfortable">
-                        </v-select>
-                        <v-select label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
-                            :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']"
-                            density="comfortable">
-                        </v-select>
-                    </v-col>
-                    <!-- </v-col> -->
-                    <!-- <v-col cols="1" xs="1" class="px-5" align-self="start"> -->
-                    <v-col class="d-flex justify-end" cols="3">
-                        <v-btn :loading="loading[1]" :disabled="familySelected.length < 1" color="blue"
-                            icon="mdi-magnify" @click="load(4)"></v-btn>
+                    <v-btn icon @click="isExclusive(1)">
+                        <v-icon>mdi-view-list</v-icon>
+                        <v-tooltip activator="parent" location="bottom">Visualização em Tabela
+                        </v-tooltip>
+                    </v-btn>
 
+                    <v-btn icon @click="isExclusive(2)">
+                        <v-icon>mdi-view-grid</v-icon>
+                        <v-tooltip activator="parent" location="bottom">Visualização em Lista
+                        </v-tooltip>
+                    </v-btn>
+                    
 
-                        <!--  <v-col cols="3" xs="1" class="px-5" align-self="start">
+                </v-btn-toggle>
+
+                <!--  <v-col cols="3" xs="1" class="px-5" align-self="start">
                         <v-text-field density="comfortable" clearable label="Pesquisar" prepend-icon="mdi-magnify" :value="CategorySelected" dense>
                             <v-tooltip activator="parent" location="bottom">Digite o termo da pesquisa e tecle Enter...
                             </v-tooltip>
                         </v-text-field>
                     </v-col>  -->
-                    </v-col>
-                </v-row>
+                <!-- </v-col> -->
+                <!-- </v-row> -->
+                <v-btn icon>
+                    <v-icon @click.stop="drawer = !drawer">mdi-magnify</v-icon>
+                    <v-tooltip activator="parent" location="bottom">Filtros...</v-tooltip>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>mdi-filter-remove</v-icon>
+                    <v-tooltip activator="parent" location="bottom">Resetar os filtros...</v-tooltip>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+
+
+
+            </v-toolbar>
+
+
+        </v-responsive>
+        <v-navigation-drawer v-model="drawer" bottom temporary location="right">
+            <template v-slot:prepend>
+                <v-list-item title="Filtro de Produtos"></v-list-item>
             </template>
 
-        </v-toolbar>
+            <v-divider></v-divider>
 
-    </v-responsive>
-
-
-    <v-col v-if="toggle_exclusive === 0" cols="12">
-        <v-row class="mx-auto justify-lg-space-around">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-        </v-row>
-    </v-col>
-
-    <v-col v-if="toggle_exclusive === 1">
-        <ProductTable></ProductTable>
-
-    </v-col>
+            <v-list density="compact" nav>
+                <v-select label="Categoria" v-model="CategorySelected" :items="items" item-text="text" item-value="key"
+                    item-title="text" density="comfortable" min-width="200px">
+                </v-select>
+                <v-select label="Subgrupos" v-model="subCategorySelected" :disabled="CategorySelected.length < 1"
+                    :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" density="comfortable">
+                </v-select>
+                <v-select label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
+                    :items="['Papelaria', 'Festas', 'Utilidades', 'Brinquedos', 'Limpeza']" density="comfortable">
+                </v-select>
+            </v-list>
+        </v-navigation-drawer>
 
 
-    <div v-if="toggle_exclusive === 2">
+        <v-col v-if="toggle_exclusive === 0" cols="12">
+            <v-row class="mx-auto justify-lg-space-around">
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+            </v-row>
+        </v-col>
 
-        <v-row>
-            <!-- <v-col cols="auto">
+        <v-col v-if="toggle_exclusive === 1">
+            <ProductTable></ProductTable>
+
+        </v-col>
+
+
+        <div v-if="toggle_exclusive === 2">
+
+            <v-row>
+                <!-- <v-col cols="auto">
                             <ProductList class="d-flex justify-center align-center" description="Apontador"
                                 src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
                                 id="5001" brand="Faber Castell" pack="Caixa com 25 und"
                                 category="Apontadores com Depósito" price="105.25" isFeature />
                         </v-col> -->
-        </v-row>
+            </v-row>
 
-    </div>
+        </div>
 
 
-</fragment>
+    </fragment>
 </template>
 
 <script >
@@ -164,7 +155,8 @@ export default {
         CategorySelected: "",
         subCategorySelected: "",
         familySelected: "",
-        loading: []
+        loading: [],
+        drawer: null,
 
     }),
     methods: {
