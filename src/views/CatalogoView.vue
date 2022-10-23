@@ -67,11 +67,11 @@
             <v-divider></v-divider>
 
             <v-list nav>
-                <v-select @change="filteredSubCategories(CategorySelected.key)" id="Categoria" label="Categoria" v-model="CategorySelected" :items="itemsCategories" item-text="text" item-value="key"
-                    item-title="text" density="comfortable" min-width="200px"  return-object>
+                <v-select id="Categoria" label="Categoria" v-model="CategorySelected" :items="itemsCategories" item-text="text" item-value="key"
+                    item-title="text" density="comfortable"  return-object @update:model-value="filteredSubCategories(CategorySelected.key)" >
                 </v-select>
                 <v-select id="SubCategoria" label="Subgrupos" v-model="subCategorySelected" :disabled="CategorySelected.length < 1"
-                    :items="itemsSubCategories" :item-text="itemsSubCategories.text" :item-value="itemsSubCategories.key"
+                    :items="itemsSubCategories" item-text="text" item-value="key"
                     item-title="text" density="comfortable" return-object>
                 </v-select>
                 <v-select id="Familia" label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
@@ -143,7 +143,7 @@ const Category = useProductCategoryStore()
 Category.fill()
 const CategoryItems = Category.$state.productCategory
 
-import { useProductSubCategoryStore } from "@/stores/productSubCategory";
+import { useProductSubCategoryStore } from "@/stores/ProductSubCategory";
 
 const SubCategory = useProductSubCategoryStore()
 SubCategory.fill()

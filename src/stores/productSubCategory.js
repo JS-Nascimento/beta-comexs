@@ -45,7 +45,8 @@ export const useProductSubCategoryStore = defineStore("ProductSubCategory", {
         filterPerCategory(pai){
             const filteredArray = this.productSubCategory.filter(SubCategory => (SubCategory.pai === pai));
             const modifiedArray = filteredArray.map(({key, text}) => ({key, text}))
-            this.productSubCategory = modifiedArray
+            console.log(modifiedArray)
+            return modifiedArray
         }
 
     }
