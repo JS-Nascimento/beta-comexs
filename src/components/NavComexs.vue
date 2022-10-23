@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <v-app-bar color="teal-darken-3" prominent>
       <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -21,7 +21,7 @@
       <v-list :items="items"></v-list>
     </v-navigation-drawer>
 
-  </div>
+  </fragment>
 
 </template>
 
