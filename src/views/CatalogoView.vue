@@ -219,9 +219,9 @@ export default {
         },
 
         filtersProducts( theLoad, CategoryName){
-                console.log(CategoryName)
-                this.load(theLoad)
+                this.load(theLoad) // ative modo espera
                 this.setBreadCumbs(CategoryName)
+                this.drawer=!this.drawer //fecha menu lateral
         },
 
      
