@@ -1,54 +1,76 @@
 <template>
-    <v-card
-    class="h-full d-flex flex-column mx-1 my-3 "
-    max-width="265" 
+  <v-card
+    class="mx-auto my-12"
+    width="300"
+    max-width="300"
+    height="600"
+    elevation="5"
   >
-    <v-img
-      src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-      height="150px"
-      max-height="150px"
-      cover
+    <v-img class="mt-3"
+      height="200"
+      aspect-ratio="1"
+      :src="src"
+     
     ></v-img>
 
-    <v-card-title>
-      Lapis de Cor 12 cores Faber Castell
-    </v-card-title>
-
-    <v-card-subtitle>
-      1,000 miles of wonder
-    </v-card-subtitle>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-lighten-2"
-        variant="text"
+    <div class="my-3 mx-5 text-subtitle-1 text-justify font-weight-black" >{{description}}</div>
+    <v-card-text>
+      <v-row
+        align="center"
+        class="mx-0"
       >
-        Explore
-      </v-btn>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        @click="show = !show"
-      ></v-btn>
-    </v-card-actions>
-
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text>
-          I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
-        </v-card-text>
+       
+      </v-row>
+      <div class="my-4 text-subtitle-1">
+       Código {{id}}
       </div>
-    </v-expand-transition>
+      <div class="my-4 text-body-1">
+        {{brand}}
+      </div>
+      <div class="my-4 text-body-1">
+        {{pack}}
+      </div>
+      <div class="my-4 text-body-1">
+        R$ {{price}}
+      </div>
+
+      <div class="my-4 text-body-1">EAN13# {{ean13}} </div>
+    </v-card-text>
+
+    
+
+    
+    <div class="px-4">
+      <v-chip-group v-if="isFeature || isLiquidation" >
+       
+        <v-chip v-if="isFeature" class="ma-2" color="orange" text-color="white" append-icon="mdi-star">
+          Lançamento
+        </v-chip>
+        <v-chip v-if="isLiquidation" class="ma-2" color="red" text-color="white" append-icon=" mdi-currency-usd-off">
+          Promoção
+        </v-chip>
+      </v-chip-group>
+    </div>
+
   </v-card>
 </template>
 
 <script>
 export default {
     name:'ProductCard',
+    props: {
+    description: String,
+    id: String,
+    brand: String,
+    category: String,
+    pack: String,
+    price: String,
+    ean13:String,
+    isFeature: Boolean,
+    isLiquidation: Boolean,
+    src:String
+
+  },
     data: () => ({
       show: false,
     }),

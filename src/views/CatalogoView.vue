@@ -84,7 +84,7 @@
                     Limpar
                 </v-btn>
                 <v-btn :rounded="0" size="large" color="blue-darken-4" class="mx-1" :loading="loading[1]"
-                    :disabled="familySelected.length < 1" @click="filtersProducts( 1, CategorySelected.text,subCategorySelected.text, familySelected.text)">
+                    :disabled="familySelected.length < 1" @click="filtersProducts( 1, CategorySelected.text, subCategorySelected.text, familySelected.text, familySelected.key)">
                     Filtrar
                 </v-btn>
             </v-list>
@@ -97,20 +97,21 @@
                 </template>
             </v-breadcrumbs>
 
-            <v-col v-if="toggle_exclusive === 0" cols="12">
-                <v-row class="mx-auto justify-lg-space-around">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                </v-row>
-            </v-col>
+            <v-row d-flex v-if="toggle_exclusive === 0" cols="12">
+                <v-col  v-for="(product, index) in itemsProducts" :key="index"  class="mx-auto justify-lg-space-around">
+                    <ProductCard :id="product.IdProduct" 
+                                 :description="product.Description"
+                                 :src="product.Image"
+                                 :brand="product.Brand"
+                                 :pack="product.Pack"
+                                 :ean13="product.EAN13"
+                                 :price="product.Price"
+                                 is-feature                   
+                                 is-liquidation
+                    />
+                    
+                </v-col>
+            </v-row>
 
             <v-col v-if="toggle_exclusive === 1">
                 <ProductTable></ProductTable>
@@ -163,7 +164,11 @@ Family.fill()
 
 const FamilyItems = Family.$state.productFamily
 
+import { useProductStore } from "@/stores/Product";
+const Products = useProductStore()
+Products.fill()
 
+const ProductsItems = Products.$state.productStore
 
 export default {
     props: {
@@ -183,10 +188,11 @@ export default {
     },
     data: () => ({
 
-        toggle_exclusive: 2,
+        toggle_exclusive: 0,
         itemsCategories: CategoryItems,
         itemsSubCategories: SubCategoryItems,
         itemsFamily: FamilyItems,
+        itemsProducts: ProductsItems,
         CategorySelected: [],
         subCategorySelected: [],
         familySelected: [],
@@ -245,10 +251,12 @@ export default {
 
         },
 
-        filtersProducts( theLoad, CategoryName,SubCategoryName, FamilyName){
+        filtersProducts( theLoad, CategoryName,SubCategoryName, FamilyName, pai){
                 this.load(theLoad) // ative modo espera
                 this.setBreadCumbs(CategoryName,SubCategoryName, FamilyName)
-                this.drawer=!this.drawer //fecha menu lateral
+                console.log(pai)
+                this.filteredProduct(pai)
+                //this.drawer=!this.drawer //fecha menu lateral
         },
 
         filteredSubCategories(pai){
@@ -261,7 +269,12 @@ export default {
         filteredFamily(pai){
             this.familySelected = ""
             this.itemsFamily = Family.filterPerSubCategory(pai)
-        }
+        },
+
+        filteredProduct(pai){
+            this.itemsProducts = Products.filterPerSubCategory(pai)
+        },
+
     } ,
       
     
