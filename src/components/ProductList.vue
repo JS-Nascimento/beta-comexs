@@ -1,8 +1,9 @@
 <template >
-  <vue-flip active-click >
+
+  <vue-flip  width="300px" active-click="true" active-hover="true" class="mx-auto my-12" >
     <template v-slot:front>
-      <v-card  pa-2 width ="300px" height="350px" max-width="300" max-height="350px">
-        <v-tooltip activator="parent" location="bottom">Click-me</v-tooltip>
+      <!-- <v-card width ="300px" height="350px" max-width="300" max-height="350px">
+        <v-tooltip activator="parent" location="bottom">Click-me</v-tooltip> -->
         <v-img
         class="bg-white"
         width="300"
@@ -10,12 +11,12 @@
         max-height="350px"
         aspect-ratio="1"
         :src="src"
-        cover
+        
       ></v-img>
-      </v-card>
+     <!-- </v-card> -->
   </template>
-    <template v-slot:back>
-    <v-card  width ="300px" height="350px" max-width="300" max-height="350px">
+  <template v-slot:back>
+    <!-- <v-card  width ="300px" height="350px" max-width="300" max-height="350px">-->
       <v-list flat>
         <v-list-title class="d-flex mx-2 font-weight-black text-center" >{{description}}</v-list-title>
         <v-list-item>
@@ -47,22 +48,24 @@
             <v-icon icon="mdi-currency-usd"></v-icon>
           </template>
           <v-list-item-title>{{price}}</v-list-item-title>
-        </v-list-item>
+        </v-list-item> 
 
         <v-chip v-if="isFeature" class="ma-2" color="orange" text-color="white" append-icon="mdi-star">
           Lançamento
-        </v-chip>
+        </v-chip> 
         <v-chip v-if="isLiquidation" class="ma-2" color="red" text-color="white" append-icon=" mdi-currency-usd-off">
           Promoção
-        </v-chip>
+        </v-chip> 
 
-      </v-list>
-    </v-card>
+      </v-list> 
+   <!--  </v-card> -->
   </template>
   </vue-flip>
+
 </template>
 
 <script>
+
 import { VueFlip } from 'vue-flip';
 export default ({
   name: 'ProductList',
@@ -80,8 +83,12 @@ export default ({
   },
   components: {
     'vue-flip': VueFlip
-  }
-
+  },
+  methods :{
+      formatPrice(value){
+        return Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+      }
+    }
 })
 
 </script>

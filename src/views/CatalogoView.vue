@@ -67,15 +67,17 @@
             <v-divider></v-divider>
 
             <v-list nav>
-                <v-select id="Categoria" label="Categoria" v-model="CategorySelected" :items="itemsCategories" item-text="text" item-value="key"
-                    item-title="text" density="comfortable"  return-object @update:model-value="filteredSubCategories(CategorySelected.key)" >
+                <v-select id="Categoria" label="Categoria" v-model="CategorySelected" :items="itemsCategories"
+                    item-text="text" item-value="key" item-title="text" density="comfortable" return-object
+                    @update:model-value="filteredSubCategories(CategorySelected.key)">
                 </v-select>
-                <v-select id="SubCategoria" label="Subgrupos" v-model="subCategorySelected" :disabled="CategorySelected.length < 1"
-                    :items="itemsSubCategories" item-text="text" item-value="key"
-                    item-title="text" density="comfortable" return-object @update:model-value="filteredFamily(subCategorySelected.key)">
+                <v-select id="SubCategoria" label="Subgrupos" v-model="subCategorySelected"
+                    :disabled="CategorySelected.length < 1" :items="itemsSubCategories" item-text="text"
+                    item-value="key" item-title="text" density="comfortable" return-object
+                    @update:model-value="filteredFamily(subCategorySelected.key)">
                 </v-select>
-                <v-select id="Familia" label="Famílias" v-model="familySelected" :disabled="subCategorySelected.length < 1"
-                    :items="itemsFamily" item-text="text" item-value="key"
+                <v-select id="Familia" label="Famílias" v-model="familySelected"
+                    :disabled="subCategorySelected.length < 1" :items="itemsFamily" item-text="text" item-value="key"
                     item-title="text" density="comfortable" return-object>
                 </v-select>
             </v-list>
@@ -84,54 +86,47 @@
                     Limpar
                 </v-btn>
                 <v-btn :rounded="0" size="large" color="blue-darken-4" class="mx-1" :loading="loading[1]"
-                    :disabled="familySelected.length < 1" @click="filtersProducts( 1, CategorySelected.text, subCategorySelected.text, familySelected.text, familySelected.key)">
+                    :disabled="familySelected.length < 1"
+                    @click="filtersProducts(1, CategorySelected.text, subCategorySelected.text, familySelected.text, familySelected.key)">
                     Filtrar
                 </v-btn>
             </v-list>
         </v-navigation-drawer>
 
-        
-            <v-breadcrumbs :items="itemsSelected" bg-color="teal-lighten-4">
-                <template v-slot:divider>
-                    <v-icon icon="mdi-forward"></v-icon>
-                </template>
-            </v-breadcrumbs>
 
-            <v-row d-flex v-if="toggle_exclusive === 0" cols="12">
-                <v-col  v-for="(product, index) in itemsProducts" :key="index"  class="mx-auto justify-lg-space-around">
-                    <ProductCard :id="product.IdProduct" 
-                                 :description="product.Description"
-                                 :src="product.Image"
-                                 :brand="product.Brand"
-                                 :pack="product.Pack"
-                                 :ean13="product.EAN13"
-                                 :price="product.Price"
-                                 is-feature                   
-                                 is-liquidation
-                    />
-                    
-                </v-col>
-            </v-row>
+        <v-breadcrumbs :items="itemsSelected" bg-color="teal-lighten-4">
+            <template v-slot:divider>
+                <v-icon icon="mdi-forward"></v-icon>
+            </template>
+        </v-breadcrumbs>
 
-            <v-col v-if="toggle_exclusive === 1">
-                <ProductTable></ProductTable>
+        <v-row d-flex v-if="toggle_exclusive === 0" cols="12">
+            <v-col v-for="(product, index) in itemsProducts" :key="index" class="mx-auto justify-lg-space-around">
+                <ProductCard :id="product.IdProduct" :description="product.Description" :src="product.Image"
+                    :brand="product.Brand" :pack="product.Pack" :ean13="product.EAN13" :price="product.Price" is-feature
+                    is-liquidation  />
 
             </v-col>
+        </v-row>
+
+        <v-col v-if="toggle_exclusive === 1">
+            <ProductTable></ProductTable>
+
+        </v-col>
 
 
-            <div v-if="toggle_exclusive === 2">
 
-                <v-row>
-                    <!-- <v-col cols="auto">
-                            <ProductList class="d-flex justify-center align-center" description="Apontador"
-                                src="https://livrariaepapelariabrasil.com.br/wp-content/uploads/2019/06/Apontador-cDeposito-Neon-Faber-Castell.png"
-                                id="5001" brand="Faber Castell" pack="Caixa com 25 und"
-                                category="Apontadores com Depósito" price="105.25" isFeature />
-                        </v-col> -->
-                </v-row>
 
-            </div>
-        
+        <v-row d-flex v-if="toggle_exclusive === 2" cols="12">
+            <v-col v-for="(product, index) in itemsProducts" :key="index" class="mx-auto justify-lg-space-around">
+                <ProductList :description="product.Description"
+                    :src="product.Image" :id="product.IdProduct" :brand="product.Brand" :pack="product.Pack"
+                    category="Apontadores com Depósito" :price="product.Price" isFeature />
+            </v-col>
+        </v-row>
+
+
+
 
     </div>
 </template>
@@ -139,7 +134,7 @@
 <script >
 import ProductCard from '../components/ProductCard.vue'
 import ProductTable from '../components/ProductTable.vue'
-//import ProductList from '../components/ProductList.vue'
+import ProductList from '../components/ProductList.vue'
 import { useProductCategoryStore } from "@/stores/ProductCategory";
 const Category = useProductCategoryStore()
 Category.fill()
@@ -183,7 +178,7 @@ export default {
     components: {
         ProductCard,
         ProductTable,
-        //ProductList,
+        ProductList,
 
     },
     data: () => ({
@@ -199,11 +194,11 @@ export default {
         loading: [],
         drawer: null,
         itemsSelected: [
-        {
-         
-        },
-      
-    ]
+            {
+
+            },
+
+        ]
 
     }),
     methods: {
@@ -226,11 +221,11 @@ export default {
             this.CategorySelected = ""
             this.subCategorySelected = ""
             this.familySelected = ""
-            this.itemsSelected=[]
+            this.itemsSelected = []
 
         },
-        setBreadCumbs(CategoryName, SubCategoryName, FamilyName){
-            this.itemsSelected=[]
+        setBreadCumbs(CategoryName, SubCategoryName, FamilyName) {
+            this.itemsSelected = []
             const catSelected = {
                 title: CategoryName,
                 disabled: false,
@@ -251,33 +246,33 @@ export default {
 
         },
 
-        filtersProducts( theLoad, CategoryName,SubCategoryName, FamilyName, pai){
-                this.load(theLoad) // ative modo espera
-                this.setBreadCumbs(CategoryName,SubCategoryName, FamilyName)
-                console.log(pai)
-                this.filteredProduct(pai)
-                //this.drawer=!this.drawer //fecha menu lateral
+        filtersProducts(theLoad, CategoryName, SubCategoryName, FamilyName, pai) {
+            this.load(theLoad) // ative modo espera
+            this.setBreadCumbs(CategoryName, SubCategoryName, FamilyName)
+            console.log(pai)
+            this.filteredProduct(pai)
+            //this.drawer=!this.drawer //fecha menu lateral
         },
 
-        filteredSubCategories(pai){
+        filteredSubCategories(pai) {
             this.subCategorySelected = ""
             this.familySelected = ""
             this.itemsSubCategories = SubCategory.filterPerCategory(pai)
 
 
         },
-        filteredFamily(pai){
+        filteredFamily(pai) {
             this.familySelected = ""
             this.itemsFamily = Family.filterPerSubCategory(pai)
         },
 
-        filteredProduct(pai){
+        filteredProduct(pai) {
             this.itemsProducts = Products.filterPerSubCategory(pai)
         },
 
-    } ,
-      
-    
+    },
+
+
 }
 </script>
 
@@ -326,4 +321,4 @@ export default {
         transform: rotate(360deg);
     }
 }
-</style>
+</style> 

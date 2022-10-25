@@ -12,6 +12,8 @@ import App from './App.vue'
 
 import router from './router'
 
+
+
 loadFonts()
 
 const vuetify = createVuetify({
@@ -26,9 +28,11 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import * as blueprints from 'vuetify/blueprints'
 import * as locale from 'vuetify/locale'
+import { VueFlip } from 'vue-flip'
 
 createApp(App).use(router)
   .use(vuetify)
+  .use(VueFlip)
   .component('EasyDataTable', Vue3EasyDataTable)
   .use(createPinia())
   .mount('#app')
