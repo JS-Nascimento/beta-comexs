@@ -38,7 +38,7 @@
       </div>
       <div class="my-4 text-body-1 font-weight-medium">
         <v-icon icon="mdi-currency-usd"></v-icon>
-        {{formatPrice(price)}}
+        {{price}}
       </div>
 
       <div class="my-4 text-body-1 font-weight-medium">
@@ -83,11 +83,7 @@ export default {
       show: false,
     }),
 
-    methods :{
-      formatPrice(value){
-        return Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
-      }
-    }
+    
 }
 </script>
 

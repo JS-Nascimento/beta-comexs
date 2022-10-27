@@ -110,7 +110,7 @@
         </v-row>
 
         <v-col v-if="toggle_exclusive === 1">
-            <ProductTable></ProductTable>
+            <ProductTable :ItemsProducts="itemsProducts"></ProductTable>
 
         </v-col>
 

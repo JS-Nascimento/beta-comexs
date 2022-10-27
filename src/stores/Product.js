@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-
+import { formatPrice } from "@/_utils";
 
 export const useProductStore = defineStore("ProductStore", {
     state: () => {
@@ -42,7 +42,7 @@ export const useProductStore = defineStore("ProductStore", {
                 Brand : marca,
                 Pack : unidade,
                 EAN13 : ean13,
-                Price : preco
+                Price : formatPrice(preco)
 
             };
             console.log(newCategory)
