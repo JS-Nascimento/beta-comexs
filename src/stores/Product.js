@@ -13,7 +13,7 @@ export const useProductStore = defineStore("ProductStore", {
             this.cleanProductStore()
             const bruteData = (await import("@/data/product.json")).default
 
-            for (let counter = 0; counter < 20; counter++) {
+            for (let counter = 0; counter < 100; counter++) {
                
                
                 this.addProductStore(

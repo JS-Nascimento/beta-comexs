@@ -110,7 +110,7 @@
         </v-row>
 
         <v-col v-if="toggle_exclusive === 1">
-            <ProductTable :ItemsProducts="itemsProducts"></ProductTable>
+            <ProductTableSync :ItemsProducts="itemsProducts"></ProductTableSync>
 
         </v-col>
 
@@ -133,7 +133,7 @@
 
 <script >
 import ProductCard from '../components/ProductCard.vue'
-import ProductTable from '../components/ProductTable.vue'
+import ProductTableSync from '../components/ProductTableSync.vue'
 import ProductList from '../components/ProductList.vue'
 import { useProductCategoryStore } from "@/stores/ProductCategory";
 const Category = useProductCategoryStore()
@@ -177,7 +177,7 @@ export default {
 
     components: {
         ProductCard,
-        ProductTable,
+        ProductTableSync,
         ProductList,
 
     },

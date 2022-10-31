@@ -1,5 +1,10 @@
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
+
+
+import { registerLicense } from '@syncfusion/ej2-base';
+
+
 import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
 import { loadFonts } from './plugins/webfontloader'
@@ -30,9 +35,12 @@ import * as blueprints from 'vuetify/blueprints'
 import * as locale from 'vuetify/locale'
 import { VueFlip } from 'vue-flip'
 
+registerLicense('ORg4AjUWIQA/Gnt2VVhjQlFaclhJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRd0VgWX1ecXNRTmJfVUM=');
+
 createApp(App).use(router)
   .use(vuetify)
   .use(VueFlip)
   .component('EasyDataTable', Vue3EasyDataTable)
+
   .use(createPinia())
   .mount('#app')
