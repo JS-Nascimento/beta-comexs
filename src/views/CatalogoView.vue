@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-responsive>
+        
             <v-toolbar>
                 <v-toolbar-title>Catálogo de Produtos</v-toolbar-title>
 
@@ -32,7 +32,7 @@
             </v-toolbar>
 
 
-        </v-responsive>
+       
         <v-navigation-drawer v-model="drawer" bottom temporary location="right">
             <template v-slot:prepend>
                 <v-list-item title="Filtro de Produtos"></v-list-item>
@@ -100,30 +100,31 @@
             </template>
         </v-breadcrumbs>
 
-        <v-row d-flex v-if="toggle_exclusive === 0" cols="12">
-            <v-col v-for="(product, index) in itemsProducts" :key="index" class="mx-auto justify-lg-space-around">
+        <v-row v-if="toggle_exclusive === 0" cols="12">
+            <v-col v-for="(product, index) in itemsProducts" :key="index">
                 <ProductCard :id="product.IdProduct" :description="product.Description" :src="product.Image"
                     :brand="product.Brand" :pack="product.Pack" :ean13="product.EAN13" :price="product.Price" is-feature
-                    is-liquidation  />
+                    is-liquidation />
 
             </v-col>
         </v-row>
 
         <v-col v-if="toggle_exclusive === 1">
             <ProductTableSync :ItemsProducts="itemsProducts"></ProductTableSync>
-
         </v-col>
 
 
 
 
-        <v-row d-flex v-if="toggle_exclusive === 2" cols="12">
-            <v-col v-for="(product, index) in itemsProducts" :key="index" class="mx-auto justify-lg-space-around">
-                <ProductList :description="product.Description"
-                    :src="product.Image" :id="product.IdProduct" :brand="product.Brand" :pack="product.Pack"
-                    category="Apontadores com Depósito" :price="product.Price" isFeature />
-            </v-col>
-        </v-row>
+        <div  v-if="toggle_exclusive === 2">
+            <v-row >
+                <div v-for="(product, index) in itemsProducts" :key="index" class="board ms-10">
+                    <ProductList :description="product.Description" :src="product.Image" :id="product.IdProduct"
+                        :brand="product.Brand" :pack="product.Pack" category="Apontadores com Depósito"
+                        :price="product.Price" isFeature />
+                </div>
+            </v-row>
+        </div>
 
 
 
@@ -280,6 +281,20 @@ export default {
 .custom-loader {
     animation: loader 1s infinite;
     display: flex;
+}
+
+
+.board {
+    display: flex;
+    flex-wrap: wrap;
+   
+    
+    
+}
+.boardFlip {
+    vertical-align: top;
+    float: left;
+
 }
 
 @-moz-keyframes loader {

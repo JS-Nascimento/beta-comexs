@@ -1,14 +1,14 @@
 <template >
 
-  <vue-flip  width="300px" active-click="true" active-hover="true" class="mx-auto my-12" >
+  <vue-flip  width="300px" height="370px" active-click="true" active-hover="true" class=" mx-5 my-5 rounded-lg elevation-3" >
     <template v-slot:front>
       <!-- <v-card width ="300px" height="350px" max-width="300" max-height="350px">
         <v-tooltip activator="parent" location="bottom">Click-me</v-tooltip> -->
         <v-img
-        class="bg-white"
-        width="300"
-        height="350px"
-        max-height="350px"
+        class="bg-white mx-auto my-auto"
+        width="285"
+        height="355"
+        max-height="340px"
         aspect-ratio="1"
         :src="src"
         
@@ -16,9 +16,9 @@
      <!-- </v-card> -->
   </template>
   <template v-slot:back>
-    <!-- <v-card  width ="300px" height="350px" max-width="300" max-height="350px">-->
-      <v-list flat>
-        <v-list-title class="d-flex mx-2 font-weight-black text-center" >{{description}}</v-list-title>
+    <div  width ="300px" height="370px" max-width="300" max-height="370px">
+      <v-list flat width="285" height="355" class="mx-auto my-auto">
+        <v-list-title class="d-flex mx-2 font-weight-black text-center " >{{description}}</v-list-title>
         <v-list-item>
           <template v-slot:prepend>
             <v-icon icon="mdi-pound"></v-icon>
@@ -58,7 +58,7 @@
         </v-chip> 
 
       </v-list> 
-   <!--  </v-card> -->
+    </div>
   </template>
   </vue-flip>
 
