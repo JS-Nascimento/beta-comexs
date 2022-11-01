@@ -1,6 +1,7 @@
 <template >
 
-  <vue-flip  width="300px" height="370px" active-click="true" active-hover="true" class=" mx-5 my-5 rounded-lg elevation-3" >
+  <vue-flip  width="300px" height="370px" active-click="true"  class=" mx-5 my-5 rounded-lg elevation-3" >
+    
     <template v-slot:front>
       <!-- <v-card width ="300px" height="350px" max-width="300" max-height="350px">
         <v-tooltip activator="parent" location="bottom">Click-me</v-tooltip> -->
@@ -14,7 +15,8 @@
         
       ></v-img>
      <!-- </v-card> -->
-  </template>
+     <v-tooltip activator="parent"  location="bottom" color="warning">Click me !</v-tooltip></template>
+  
   <template v-slot:back>
     <div  width ="300px" height="370px" max-width="300" max-height="370px">
       <v-list flat width="285" height="355" class="mx-auto my-auto">
@@ -60,6 +62,7 @@
       </v-list> 
     </div>
   </template>
+  
   </vue-flip>
 
 </template>
