@@ -1,4 +1,17 @@
 # ComexS
+## SFV e CRM em fase de desenvolvimento.
+
+###Tecnologias utilizadas
+####FrontEnd
+JavaScript
+Vue 3
+Vuetify 3
+Synchfusion Tools
+
+####BackEnd
+Java 11
+Spring Boot
+Hibernate
 
 ## Project setup
 ```
