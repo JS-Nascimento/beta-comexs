@@ -2,13 +2,14 @@
 ## SFV e CRM em fase de desenvolvimento.
 
 ###Tecnologias utilizadas
-####FrontEnd
+
+###FrontEnd
 JavaScript
 Vue 3
 Vuetify 3
 Synchfusion Tools
 
-####BackEnd
+###BackEnd
 Java 11
 Spring Boot
 Hibernate
