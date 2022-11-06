@@ -1,4 +1,4 @@
-# beta-comexs
+# ComexS
 
 ## Project setup
 ```
